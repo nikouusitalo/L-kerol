@@ -1,8 +1,8 @@
-const Koa = require('koa');
-const app = new Koa();
-
-app.use(async (ctx: { body: string; }) => {
-  ctx.body = 'Hello World';
+const express = require('express');
+const app = express();
+app.get('/',(req:any, res:any, next:any) => {
+    res.send("Root route is working");
 });
-
-app.listen(6969);
+app.listen(3000,() => {
+    console.log("Server started on port 3000");
+});
