@@ -1,0 +1,27 @@
+name: Dev CI
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    name: Testit (Dev)
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout koodi
+      uses: actions/checkout@v2
+    
+    - name: Asenna riippuvuudet
+      run: npm install
+    
+    - name: Suorita dev-testit
+      run: npm run test:dev  # Oletettavasti dev-testit on määritelty package.jsonissa
+    
+    - name: Lähetä dev-testiraportti
+      uses: actions/upload-artifact@v2
+      with:
+        name: dev-test-reports
+        path: test-reports/  # Oletetaan, että testiraportit tallentuvat tähän kansioon
