@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-      target: development # Käytä kehitysvaiheen kohdetta Dockerfilen määrittämiseen
+      target: dev # Käytä kehitysvaiheen kohdetta Dockerfilen määrittämiseen
       dockerfile: Dockerfile
     ports:
       - '4000:3000'
@@ -16,19 +16,23 @@ services:
       - .:/app
     depends_on:
       - db
-    command: npm run dev # Käynnistä Nodemon development-skriptillä
 
   db:
-    image: postgres:10.3
+    image: postgres:15.3
     container_name: postgres-Lakerol
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/dat
+        a
     ports:
       - '5432:5432'
     env_file:
       - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
 
 volumes:
   postgres_data:
-
