@@ -1,0 +1,33 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and test back-end
+        run: |
+          docker-compose -f docker-compose.dev.yml build app
+          docker-compose -f docker-compose.dev.yml run --rm app npm install
+          docker-compose -f docker-compose.dev.yml run --rm app npm test
+
+      - name: Build Docker image for back-end
+        run: |
+          docker-compose -f docker-compose.dev.yml build app
+
+      - name: Push Docker images to registry (if applicable)
+        # Add your own push steps here if you're using a container registry
+
+      - name: Deploy to production (example)
+        # Add deployment steps here, e.g., deploying to a server or cloud service
+
+      - name: Clean up
+        run: |
+          docker-compose -f docker-compose.dev.yml down
