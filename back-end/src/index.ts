@@ -1,8 +1,5 @@
-const express = require('express');
-const app = express();
-app.get('/',(req:any, res:any, next:any) => {
-    res.send("Roooooooooooot route is working");
-});
-app.listen(3000,() => {
-    console.log("Server started on port 3000");
-});
+import {koa} from ("koa");
+import router from ('@koa/router');
+import bodyParser from ('koa-bodyparser');
+const app = new koa();
+app.listen(3000);

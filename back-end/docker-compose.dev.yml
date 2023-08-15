@@ -3,36 +3,32 @@ services:
   app:
     build:
       context: .
-      target: dev # Käytä kehitysvaiheen kohdetta Dockerfilen määrittämiseen
+      target: dev
       dockerfile: Dockerfile
     ports:
       - '4000:3000'
     expose:
       - '5000'
-    env_file:
-      - .env
     container_name: node_app
     volumes:
       - .:/app
     depends_on:
       - db
-
+    env_file:
+      - .env
   db:
-    image: postgres:15.3
+    image: postgres:15.4-alpine3.18
     container_name: postgres-Lakerol
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/dat
-        a
+      - postgres_data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
     env_file:
       - .env
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-
-
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
 volumes:
   postgres_data:
